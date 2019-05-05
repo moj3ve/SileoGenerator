@@ -3,7 +3,7 @@
     "tabs": [{
         "tabname": "Details",
         "views": [{
-            "markdown": "## ModernPower",
+            "markdown": "## ModernPower\nA good looking, non intrusive Power UI",
             "class": "DepictionMarkdownView"
         }]
     }],
