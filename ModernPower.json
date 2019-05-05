@@ -1,0 +1,11 @@
+{
+    "minVersion": "0.1",
+    "tabs": [{
+        "tabname": "Details",
+        "views": [{
+            "markdown": "## ModernPower",
+            "class": "DepictionMarkdownView"
+        }]
+    }],
+    "tintColor": "#f75454"
+}
