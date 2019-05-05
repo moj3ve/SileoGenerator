@@ -14,9 +14,14 @@ The Sileo Depiction System is hard and time consuming to generate manually, this
 - Made with ❤️
 
 # To-Do
+These 4 are top priority:
 - [ ] Make a GUI
 - [ ] Support for plugins so people can add more questions
 - [ ] Generate Sileo-Featured.json
+- [ ] Generate DepictionTableTextView (for Version, Release Date, Price, Developer)
+
+This can be a plugin:
+- [ ] Generate DepictionTableButtonView and other classes used by Sileo
 
 # Example JSON output
 ```json
