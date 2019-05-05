@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -33,15 +35,19 @@ public class SileoGenerator {
         The package description gathered from the user at runtime
     */
     private static String description = "";
+    /*
+        The package screenshots gathered from the user at runtime
+    */
+    private static ArrayList<String> screenshots = new ArrayList<>();
 
     /*
        Main method
     */
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         /*
             Display 'help' message if no arguments specified
          */
-        if(args.length == 0) {
+        if (args.length == 0) {
             System.out.println("=== Sileo Depiction Generator v1.0 ===");
             System.out.println("Please specify arguments!\n");
             System.out.println("Valid Arguments:\ncreate");
@@ -49,7 +55,7 @@ public class SileoGenerator {
             /*
                 If the first argument is equal to 'create' start the JSON creation, first gathering info from the user
              */
-            if(args[0].equalsIgnoreCase("create")) {
+            if (args[0].equalsIgnoreCase("create")) {
                 // Start a new reader instance
                 Scanner reader = new Scanner(System.in);
 
@@ -69,14 +75,36 @@ public class SileoGenerator {
                 System.out.println("Short description of your package: ");
                 description = reader.nextLine();
 
-                // Display the gathered information to the user for confirmation
-                System.out.println("\nPackage Information:\nName: " + name + "\nHeader Image URL: " + headerUrl + "\nTint Colour: " + tintColour + "\nDescription: " + description);
+                // Get the amount of screenshots
+                System.out.println("Do you want your depiction to contain " + "screenshots? (y/n)");
+                String containScreenshots = reader.nextLine();
+
+                if (containScreenshots.equalsIgnoreCase("y")) {
+                    System.out.println("How many screenshots do you have? (Integer)");
+                    int numberOfScreenshots = reader.nextInt();
+
+                    // Ask the user for a screenshot for how many times they provided
+                    for(int x = 0; x < numberOfScreenshots; x++) {
+                        // Ask the user for a URL
+                        System.out.println("Screenshot " + (x + 1) + " url: ");
+                        String url = reader.next();
+
+                        // Add the screenshot to an array
+                        screenshots.add(url);
+                    }
+
+                    // Display the gathered information to the user for confirmation
+                    System.out.println("\nPackage Information:\nName: " + name + "\nHeader Image URL: " + headerUrl + "\nTint Colour: " + tintColour + "\nDescription: " + description + "\nScreenshots: " + Arrays.toString(screenshots.toArray()));
+                } else {
+                    // Display the gathered information to the user for confirmation
+                    System.out.println("\nPackage Information:\nName: " + name + "\nHeader Image URL: " + headerUrl + "\nTint Colour: " + tintColour + "\nDescription: " + description);
+                }
 
                 // Ask the user if this information is correct
                 System.out.println("Is this information correct? (y/n)");
-                String isOk = reader.nextLine();
+                String isOk = reader.next();
 
-                if(isOk.equalsIgnoreCase("y")) {
+                if (isOk.equalsIgnoreCase("y")) {
                     // The information is correct so we start generating a depiction
                     System.out.println("\nGenerating Sileo Depiction... This may take a few moments...");
 
@@ -112,6 +140,31 @@ public class SileoGenerator {
                     // Put the object into the array
                     views.put(0, firstView);
 
+                    if(containScreenshots.equalsIgnoreCase("y")) {
+                        // Create an object of the screenshots view, this will contain screenshots
+                        JSONObject screenshotsView = new JSONObject();
+
+                        screenshotsView.put("itemCornerRadius", 9);
+                        screenshotsView.put("itemSize", "{187.5, 406}");
+
+                        // Create an array of screenshots
+                        JSONArray theScreenshots = new JSONArray();
+                        int i = 0;
+                        for(String url : screenshots) {
+                            JSONObject screen = new JSONObject();
+                            screen.put("accessibilityText", "Screenshot");
+                            screen.put("url", url);
+                            screen.put("fullSizeURL", url);
+                            theScreenshots.put(i, screen);
+                            i++;
+                        }
+
+                        // Put the screenshots into the screenshotsView
+                        screenshotsView.put("screenshots", theScreenshots);
+
+                        views.put(1, screenshotsView);
+                    }
+
                     // Put the views into the details tab
                     detailsTab.put("views", views);
 
@@ -126,9 +179,9 @@ public class SileoGenerator {
 
                     // Write the json to a file with the package name at the root of the directory
                     File json = new File(runDirectory, name + ".json");
-                    if(!json.exists()) {
+                    if (!json.exists()) {
                         try {
-                            if(json.createNewFile()) {
+                            if (json.createNewFile()) {
                                 // The file was successfully created, now write to it
 
                                 Writer output = new BufferedWriter(new FileWriter(json));
@@ -147,9 +200,9 @@ public class SileoGenerator {
                     } else {
                         // The file already exists, ask the user if we should overwrite it
                         System.out.println("The file: + " + json.getAbsolutePath() + " already exists, overwrite? (y/n)");
-                        String overwrite = reader.nextLine();
+                        String overwrite = reader.next();
 
-                        if(overwrite.equalsIgnoreCase("y")) {
+                        if (overwrite.equalsIgnoreCase("y")) {
                             // We have permission to overwrite the file
                             Writer output = null;
                             try {
@@ -175,6 +228,7 @@ public class SileoGenerator {
 
                 // Close the reader
                 reader.close();
+
             } else {
                 // Tell the user that their argument is not valid
                 System.err.println("ERROR: Argument '" + args[0] + "' is not a valid argument ");

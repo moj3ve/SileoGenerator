@@ -2,10 +2,43 @@
     "minVersion": "0.1",
     "tabs": [{
         "tabname": "Details",
-        "views": [{
-            "markdown": "## ModernPower\nA good looking, non intrusive Power UI",
-            "class": "DepictionMarkdownView"
-        }]
+        "views": [
+            {
+                "markdown": "## ModernPower\nModernPower best tweak",
+                "class": "DepictionMarkdownView"
+            },
+            {
+                "itemCornerRadius": 9,
+                "itemSize": "{187.5, 406}",
+                "screenshots": [
+                    {
+                        "fullSizeURL": "https://repo.conorthedev.com/img/modernpower-screenshot-1.png",
+                        "accessibilityText": "Screenshot",
+                        "url": "https://repo.conorthedev.com/img/modernpower-screenshot-1.png"
+                    },
+                    {
+                        "fullSizeURL": "https://repo.conorthedev.com/img/modernpower-screenshot-2.png",
+                        "accessibilityText": "Screenshot",
+                        "url": "https://repo.conorthedev.com/img/modernpower-screenshot-2.png"
+                    },
+                    {
+                        "fullSizeURL": "https://repo.conorthedev.com/img/modernpower-screenshot-3.png",
+                        "accessibilityText": "Screenshot",
+                        "url": "https://repo.conorthedev.com/img/modernpower-screenshot-3.png"
+                    },
+                    {
+                        "fullSizeURL": "https://repo.conorthedev.com/img/modernpower-screenshot-4.png",
+                        "accessibilityText": "Screenshot",
+                        "url": "https://repo.conorthedev.com/img/modernpower-screenshot-4.png"
+                    },
+                    {
+                        "fullSizeURL": "https://repo.conorthedev.com/img/modernpower-screenshot-5.png",
+                        "accessibilityText": "Screenshot",
+                        "url": "https://repo.conorthedev.com/img/modernpower-screenshot-5.png"
+                    }
+                ]
+            }
+        ]
     }],
     "tintColor": "#f75454"
 }
