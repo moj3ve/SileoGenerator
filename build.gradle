@@ -11,6 +11,24 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    embed
+}
+
 dependencies {
-    compile group: 'org.json', name: 'json', version: '20180813'
+    embed group: 'org.json', name: 'json', version: '20180813'
+    configurations.compile.extendsFrom(configurations.embed)
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.conorthedev.sileogenerator.SileoGenerator'
+    }
+}
+
+
+jar {
+    from {
+        configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
